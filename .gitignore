@@ -39,3 +39,6 @@ out/
 
 ### ignore properties ###
 **/application.propreties
+
+### useless resource file ###
+**/tempDirectory/*

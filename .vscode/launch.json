@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VideoplatformApplication<videoplatform>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "dev.liam.videoplatform.VideoplatformApplication",
+            "projectName": "videoplatform",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

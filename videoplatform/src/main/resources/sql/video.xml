@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="video">
+    <select id="localNum"
+        resultType="java.lang.Integer">
+    select
+	    local_num
+    from
+	    (
+	    select
+		    round(rand(unix_timestamp(now()))* 10000000, 0) as local_num) rand_num
+    where
+	    local_num not in(
+	    select
+		    local_num
+	    from
+		    video_tbl vt);
+    </select>
+    <select id="getVideoList"
+        resultType="java.util.HashMap">
+    select 
+        serial_num,
+        title,
+        local_num
+	from video_tbl
+    </select>
+    <select id="getVideoInfo"
+        parameterType="java.lang.Integer"
+        resultType="dev.liam.videoplatform.component.dto.VideoDTO">
+    select *
+	from video_tbl
+	where serial_num = #{serialNum}
+    </select>
+    <insert id="saveVideoInfo"
+        parameterType="dev.liam.videoplatform.component.dto.VideoDTO">
+    insert into
+	    video_tbl (title,
+	        local_num,
+	        write_date)
+        values (#{title},
+            #{localNum},
+            now()
+        );
+    </insert>
+    <delete id="deleteVideo"
+        parameterType="java.lang.Integer">
+    delete from video_tbl
+	where serial_num = #{serialNum} 
+    </delete>
+    <!-- <select id="getOverlapedComponent" resultType="java.lang.String" parameterType="java.util.HashMap">
+        select 'T'
+            from user_t
+                <choose>
+                    <when test="id != null">
+                        where id = #{id};
+                    </when>
+                    <when test="nickname != null">
+                        where id = #{nickName};
+                    </when>
+                    <when test="email != null">
+                        where id = #{email};
+                    </when>
+                    <otherwise>
+                        where false;
+                    </otherwise>
+                </choose>
+    </select>
+    <insert id="regist" parameterType="home.login.app.login.vo.userVo">
+        insert into user_t values(#{id}, #{nickName}, #{birthDay}, now(), #{sex}, nextval('sso_id_seq'), #{email})
+    </insert> -->
+</mapper>
